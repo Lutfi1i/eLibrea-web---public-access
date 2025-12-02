@@ -54,12 +54,12 @@ export default function Navbar() {
         damping: 14,
       }}
     >
-      <motion.ul
+      <motion.div
         className={`w-full ${
           showNav
             ? '[--display-from:none] [--display-to:flex]'
             : 'max-sm:[--display-from:none] sm:[--display-to:flex]'
-        }  [--opacity-from:0.1] [--opacity-to:1] flex-col sm:flex-row items-center justify-start gap-20 max-sm:gap-5 max-sm:pt-10`}
+        }  [--opacity-from:0.1] [--opacity-to:1] flex-col sm:flex-row items-center justify-between gap-20 max-sm:gap-5 max-sm:pt-10`}
         variants={{
           hidden: {
             display: 'var(--display-from, none)',
@@ -78,58 +78,43 @@ export default function Navbar() {
           showNav ? 'visible' : '',
         ]}
       >
+        <motion.ul className="flex flex-col sm:flex-row items-center gap-5 sm:gap-20">
           <Image
-          src={Logo}
+            src={Logo}
             alt="Hero illustration"
             width={40}
             height={20} />
-        <li>
-          <Link href={'#'}>
-            <Button variant="ghost" className="text-slate-900">Home</Button>
-          </Link>
-        </li>
-        <li>
-          <Link href={'#skills'}>
-            <Button variant="ghost" className="text-slate-900">Fitur</Button>
-          </Link>
-        </li>
-        <li>
-          <Link href={'#projects'}>
-            <Button variant="ghost" className="text-slate-900">Tentang Kami</Button>
-          </Link>
-        </li>
-        <Link href="/login">
-          <Button className="px-10 py-2 bg-[#B41A1A] border-2 border-[#B41A1A] text-white rounded-xl justify-end items-end hover:bg-white hover:text-red-900 transition font-bold text-sm">
+          <li>
+            <Link href={'#'}>
+              <Button variant="ghost" className="text-slate-900">Home</Button>
+            </Link>
+          </li>
+          <li>
+            <Link href={'#skills'}>
+              <Button variant="ghost" className="text-slate-900">Fitur</Button>
+            </Link>
+          </li>
+          <li>
+            <Link href={'#projects'}>
+              <Button variant="ghost" className="text-slate-900">Tentang Kami</Button>
+            </Link>
+          </li>
+        </motion.ul>
+        
+        <div className="flex items-center gap-3 sm:ml-auto">
+          <Link href="/login">
+            <Button className="px-10 py-2 bg-[#B41A1A] border-2 border-[#B41A1A] text-white rounded-xl hover:bg-white hover:text-red-900 transition font-bold text-sm">
               Login
-          </Button>
-        </Link>
-      </motion.ul>
-
-      <motion.div
-        className="w-full [--display-from:none][--display-to:inline-block]"
-        variants={{
-          hidden: {
-            display: 'var(--display-from, none)',
-            transition: { delay: 0, duration: 0.3 },
-          },
-          visible: {
-            display: 'var(--display-to)',
-            transition: { delay: 0.2, duration: 0.3 },
-          },
-        }}
-        initial="hidden"
-        animate={hidden ? 'visible' : 'hidden'}
-      >
-        <Button variant={'accent'} className="w-full justify-between">
-          Mulai 
-          
-        <Link href="/signup">
-          <Button className="px-10 py-2 bg-[#B41A1A] border-2 border-[#B41A1A] text-white rounded-xl hover:bg-white hover:text-red-900 transition font-bold text-sm">
+            </Button>
+          </Link>
+          <Link href="/signup">
+            <Button className="px-10 py-2 bg-[#B41A1A] border-2 border-[#B41A1A] text-white rounded-xl hover:bg-white hover:text-red-900 transition font-bold text-sm">
               Daftar
-          </Button>
-        </Link>
-        </Button>
+            </Button>
+          </Link>
+        </div>
       </motion.div>
+
 
       <Button
         size={'icon'}

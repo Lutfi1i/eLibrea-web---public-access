@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
 
 const poppins = Poppins({
   subsets: ['latin'],
-  display: 'swap', // Optional: 'swap' ensures text remains visible during font loading
-  variable: '--font-poppins', // Optional: defines a CSS variable for easier use with Tailwind CSS
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], // Specify desired weights
+  display: 'swap',
+  variable: '--font-poppins',
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'], 
 });
 
 export const metadata = {

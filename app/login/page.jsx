@@ -17,7 +17,7 @@ export default function Page() {
     if (status === 'authenticated' && session?.user) {
       // Redirect admin to dashboard, others to book page
       if (session.user.role === 'admin') {
-        router.push('/dashboard')
+        router.push('/admin/dashboard')
       } else {
         router.push('/home')
       }
@@ -47,21 +47,18 @@ export default function Page() {
       }
 
       if (response?.ok) {
-        // Wait a moment for the session cookie to be set, then redirect
-        // The session will be available on the next page load
         setTimeout(() => {
           // Check session one more time before redirecting
           fetch('/api/auth/session')
             .then(res => res.json())
             .then(sessionData => {
               if (sessionData?.user?.role === 'admin') {
-                window.location.href = '/dashboard'
+                window.location.href = '/admin/dashboard'
               } else {
                 window.location.href = '/home'
               }
             })
             .catch(() => {
-              // Fallback redirect
               window.location.href = '/home'
             })
         }, 200)

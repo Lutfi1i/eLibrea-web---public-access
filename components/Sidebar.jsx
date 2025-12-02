@@ -1,9 +1,10 @@
 "use client"
 import React, { useState } from "react";
-import { Home, Bookmark, Settings } from "lucide-react";
+import { Home, Bookmark, Settings, History, Book, ClockAlert } from "lucide-react";
 import Logo from '../public/Logo1-librea.png';
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Sidebar() {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,33 +25,57 @@ export default function Sidebar() {
             src={Logo}
             label="eLibrea"
             alt="Logo"
-            expanded={isExpanded}
             className={`transition-all duration-300 ${isExpanded ? "w-8" : "w-8"}`}
           />
         </div>
 
         <nav className="flex flex-col gap-4 mt-4">
 
-        <a href="home">
+        <Link href="/">
           <SidebarItem
             icon={<Home size={20} />}
             label="Home"
             href="home"
             active={pathname.startsWith("/home")}
             expanded={isExpanded}
-            onclick={() => router.push("/home")}
             />
-        </a>
+        </Link>
 
-        <a href="bookmark">
+        <Link href="/bookmark">
           <SidebarItem
             icon={<Bookmark size={20} />}
             label="Bookmark"
             active={pathname.startsWith("/bookmark")}
             expanded={isExpanded}
-            onclick={() => router.push("/bookmark")}
             />
-        </a>
+        </Link>
+
+        <Link href="/peminjaman">
+          <SidebarItem
+            icon={<Book size={20} />}
+            label="Peminjaman"
+            active={pathname.startsWith("/peminjaman")}
+            expanded={isExpanded}
+            />
+        </Link>
+
+        <Link href="/pengembalian">
+          <SidebarItem
+            icon={<History size={20} />}
+            label="Pengembalian"
+            active={pathname.startsWith("/pengembalian")}
+            expanded={isExpanded}
+            />
+        </Link>
+
+        <Link href="/denda">
+          <SidebarItem
+            icon={<ClockAlert size={20} />}
+            label="Denda"
+            active={pathname.startsWith("/denda")}
+            expanded={isExpanded}
+            />
+        </Link>
         </nav>
       </div>
 
@@ -69,7 +94,6 @@ export default function Sidebar() {
 function SidebarItem({ icon, label, active, expanded }) {
   return (
     <div
-      onclick={onclick}
       className={`flex items-center cursor-pointer transition-colors px-4 py-2 rounded-lg mx-2
         ${active ? "text-red-500 font-bold" : "text-gray-500 hover:text-red-500"}`}
     >

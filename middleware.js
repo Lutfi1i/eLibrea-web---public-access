@@ -13,7 +13,7 @@ export default withAuth(
     }
 
     if (
-      (pathname.startsWith("/dashboard") || pathname.startsWith("/books-create")) &&
+      (pathname.startsWith("/admin")) &&
       token?.role !== "admin"
     ) {
       return NextResponse.redirect(new URL("/404", req.url));
@@ -26,12 +26,10 @@ export default withAuth(
   }
 );
 
-// =============================
-// 3. Routes yang dilindungi
-// =============================
+
 export const config = {
   matcher: [
-    "/dashboard/:path*",
+    "/admin/:path*",
     "/books-create/:path*",
     "/login",
     "/register",
