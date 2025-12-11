@@ -12,7 +12,6 @@ export default function BookCard({ id, title, cover, category, isBookmarked = fa
   const [imageError, setImageError] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // Sync internal state with prop when it changes (e.g., when navigating back)
   useEffect(() => {
     setMarked(isBookmarked);
   }, [isBookmarked]);

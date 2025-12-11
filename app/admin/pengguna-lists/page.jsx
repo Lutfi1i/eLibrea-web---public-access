@@ -24,7 +24,6 @@ export default function PenggunaListPage() {
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
-          // Reload users
           loadUsers();
         }
       }
@@ -55,18 +54,15 @@ export default function PenggunaListPage() {
 
   const resolveProfilePicture = (path) => {
     if (!path) return null;
-    if (path.startsWith("http://") || path.startsWith("https://")) {
+    if (path.startsWith("http://")) {
       return path;
     }
     if (path.startsWith("/")) {
-      // Already a public asset served by Next.js (e.g. /uploads/..., /elib-default...)
       return path;
     }
-    // If the DB stored only the filename, assume it lives in /uploads inside Next.js public folder
     return `/uploads/${path}`;
   };
 
-  // Pagination logic
   const indexOfLast = currentPage * itemsPerPage;
   const indexOfFirst = indexOfLast - itemsPerPage;
   const currentUsers = Array.isArray(users) ? users.slice(indexOfFirst, indexOfLast) : [];
@@ -137,13 +133,7 @@ export default function PenggunaListPage() {
                     </span>
                   </td>
 
-                  <td className="p-4 flex gap-2 justify-center">
-                    <button
-                      onClick={() => updateUserRole(user.id, "admin")}
-                      className="px-3 py-1 text-sm bg-purple-500 text-white rounded hover:bg-purple-600"
-                    >
-                      Jadikan Admin
-                    </button>
+                  <td className="p-4 flex gap-2 justify-center">  
                     <button
                       onClick={() => updateUserRole(user.id, "petugas")}
                       className="px-3 py-1 text-sm bg-blue-500 text-white rounded hover:bg-blue-600"

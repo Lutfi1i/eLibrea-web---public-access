@@ -12,6 +12,9 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Cek apakah user adalah admin
+  const isAdmin = session?.user?.role === "admin";
+
   return (
     <div
       className={`h-screen bg-white shadow-lg flex flex-col justify-between transition-all duration-300 rounded-r-2xl
@@ -72,23 +75,29 @@ export default function AdminSidebar() {
             onClick={() => router.push("/admin/books-lists")}
           />
 
-          <SidebarItem
-            icon={<UserCog size={20} />}
-            label="Petugas"
-            href="/admin/petugas-lists"
-            active={pathname.startsWith("/admin/petugas-lists")}
-            expanded={isExpanded}
-            onClick={() => router.push("/admin/petugas-lists")}
-          />
+          {/* Hanya tampilkan menu Petugas jika role adalah admin */}
+          {isAdmin && (
+            <SidebarItem
+              icon={<UserCog size={20} />}
+              label="Petugas"
+              href="/admin/petugas-lists"
+              active={pathname.startsWith("/admin/petugas-lists")}
+              expanded={isExpanded}
+              onClick={() => router.push("/admin/petugas-lists")}
+            />
+          )}
 
-          <SidebarItem
-            icon={<Users size={20} />}
-            label="Pengguna"
-            href="/admin/pengguna-lists"
-            active={pathname.startsWith("/admin/pengguna-lists")}
-            expanded={isExpanded}
-            onClick={() => router.push("/admin/pengguna-lists")}
-          />
+          {/* Hanya tampilkan menu Pengguna jika role adalah admin */}
+          {isAdmin && (
+            <SidebarItem
+              icon={<Users size={20} />}
+              label="Pengguna"
+              href="/admin/pengguna-lists"
+              active={pathname.startsWith("/admin/pengguna-lists")}
+              expanded={isExpanded}
+              onClick={() => router.push("/admin/pengguna-lists")}
+            />
+          )}
 
         </nav>
       </div>
@@ -158,4 +167,3 @@ function SidebarItem({ icon, label, active, expanded, image, sublabel, onClick }
     </div>
   );
 }
-

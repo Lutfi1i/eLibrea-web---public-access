@@ -24,7 +24,6 @@ export default function PetugasListPage() {
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
-          // Reload users
           loadUsers();
         }
       }
@@ -55,7 +54,7 @@ export default function PetugasListPage() {
 
   const resolveProfilePicture = (path) => {
     if (!path) return null;
-    if (path.startsWith("http://") || path.startsWith("https://")) {
+    if (path.startsWith("http://")) {
       return path;
     }
     if (path.startsWith("/")) {
@@ -136,14 +135,12 @@ export default function PetugasListPage() {
                   </td>
 
                   <td className="p-4 flex gap-2 justify-center">
-                    {user.role !== "admin" && (
-                      <button
-                        onClick={() => updateUserRole(user.id, "admin")}
+                    <button
+                        onClick={() => updateUserRole(user.id, "users")}
                         className="px-3 py-1 text-sm bg-purple-500 text-white rounded hover:bg-purple-600"
                       >
-                        Jadikan Admin
+                        Jadikan User
                       </button>
-                    )}
                     {user.role === "admin" && (
                       <span className="px-3 py-1 text-sm bg-gray-300 text-gray-600 rounded">
                         Sudah Admin

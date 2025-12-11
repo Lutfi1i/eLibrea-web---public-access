@@ -29,7 +29,7 @@ export default function DendaPage() {
       setLoading(true);
       // Get semua peminjaman user untuk cek yang overdue
       const res = await fetch(
-        getApiUrl(`/api/peminjaman/user/${session.user.id}`),
+        getApiUrl(`/api/peminjaman/user/${session.user.id}/status/overdue`),
         {
           cache: "no-store",
         }

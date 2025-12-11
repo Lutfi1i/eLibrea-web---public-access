@@ -2,8 +2,9 @@ import Image from "next/image";
 import { Bookmark, Languages } from "lucide-react";
 import { getApiUrl } from "@/lib/api";
 import BookCoverImage from "@/components/BookCoverImage";
-import BookCard from "@/components/BookCard";
 import Link from "next/link";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
 async function getBook(id) {
   if (!id) return null;
@@ -24,6 +25,8 @@ async function getBook(id) {
 export default async function page({ params }) {
   const { id } = await params;
   const book = await getBook(id);
+  const session = await getServerSession(authOptions);
+  
 
   if (!book)
     return (
@@ -45,9 +48,7 @@ export default async function page({ params }) {
 
   return (
     <div className="w-full flex flex-col pb-20">
-      {/* ================= HEADER ================= */}
       <div className="w-full bg-[#F7F3F3] px-10 py-8 flex flex-col md:flex-row gap-10 items-start relative">
-        {/* LEFT: COVER */}
         <div className="w-[210px] h-[310px] bg-white shadow-sm border rounded-lg flex items-center justify-center p-2">
           <BookCoverImage
             cover={book.cover_picture}
@@ -57,7 +58,6 @@ export default async function page({ params }) {
           />
         </div>
 
-        {/* MIDDLE: BOOK INFO */}
         <div className="flex flex-col flex-1 pt-2">
           <h1 className="text-[22px] font-semibold leading-tight">
             {book.judul}
@@ -69,7 +69,7 @@ export default async function page({ params }) {
             {book.tahun_terbit || "Tidak, belum diketahui"}
           </p>
 
-          {/* BUTTONS */}
+
           <div className="flex items-center gap-3 mt-5">
             <Link href={`/borrow/${id}`}>
               <button className="bg-[#B41A1A] text-white px-10 py-2 rounded-lg text-sm font-medium shadow-md hover:bg-[#9e1717] transition">
@@ -83,9 +83,7 @@ export default async function page({ params }) {
           </div>
         </div>
 
-        {/* RIGHT: CATEGORY + BAHASA + EKSAMPLAR */}
         <div className="flex flex-col items-end gap-3 ml-auto md:items-end">
-          {/* Category Box */}
           <Link
             href={`/kategori/${book.kategori || "pelajaran"}`}
             className="bg-linear-to-r from-[#BFAEAE] to-[#D7CECE] px-7 py-6 rounded-xl shadow-sm text-white hover:opacity-90 transition select-none w-[220px] text-right"
@@ -94,7 +92,7 @@ export default async function page({ params }) {
             <h2 className="text-[22px] font-bold -mt-1 text-left">{book.kategori} &nbsp; →</h2>
           </Link>
 
-          {/* Bahasa + Eksamplar */}
+ 
           <div className="flex items-center gap-3 mt-1 text-[15px] text-neutral-700">
             <Languages size={24} />
             <span>{book.bahasa || "Tidak, belum diketahui"}</span>
@@ -102,9 +100,7 @@ export default async function page({ params }) {
           </div>
         </div>
       </div>
-      {/* ================= INFO ================= */}
       <div className="mt-14 px-10 grid grid-cols-1 md:grid-cols-2 gap-12">
-        {/* LEFT INFO */}
         <div className="text-[15px] flex flex-col gap-3">
           <p>
             Tersedia?:{" "}
@@ -118,30 +114,11 @@ export default async function page({ params }) {
           <p>Penerbit: {book.penerbit || "Tidak diketahui"}</p>
         </div>
 
-        {/* RIGHT DESC */}
         <div>
           <p className="font-semibold text-[15px] mb-1">Deskripsi :</p>
           <p className="text-neutral-700 text-[14px] leading-relaxed">
             {book.deskripsi || "Belum ada deskripsi untuk buku ini"}
           </p>
-        </div>
-      </div>
-
-      {/* ================= RELATED BOOKS ================= */}
-      <div className="mt-20 px-10">
-        <h2 className="text-xl font-semibold mb-5">Buku lainnya</h2>
-
-        <div className="flex gap-6 pb-2">
-          {[1, 2, 3, 4, 5].map((num) => (
-            <div key={num}>
-              <BookCard
-                id={num}
-                title="Matematika Terapan"
-                cover=""
-                category="Pelajaran"
-              />
-            </div>
-          ))}
         </div>
       </div>
     </div>

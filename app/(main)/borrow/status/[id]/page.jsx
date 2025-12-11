@@ -74,15 +74,20 @@ function PeminjamanStatusPage() {
 
   if (!peminjaman) {
     return (
-      <div className="min-h-screen w-full flex flex-col items-center justify-center">
-        <p className="text-gray-500">Peminjaman tidak ditemukan</p>
-        <button
-          onClick={handleBack}
-          className="mt-4 px-4 py-2 bg-rose-600 text-white rounded-lg"
-        >
-          Kembali
-        </button>
-      </div>
+      <div className="flex flex-col items-center justify-center py-20 text-center">
+      <Image
+        src="/tao1.png"
+        width={180}
+        height={180}
+        alt="Empty Bookmark"
+        className="opacity-80"
+      />
+      <h2 className="text-xl font-semibold mt-4">Peminjaman Tidak Ditemukan</h2>
+      <p className="text-gray-500 mt-2 max-w-md">
+        Cek kesalahan dalam URL maupun ID, jika tidak ada laporkan!
+      </p>
+      <h2 className="text-xl font-semibold mt-4">Error 404 NOT FOUND</h2>
+    </div>
     );
   }
 
@@ -113,7 +118,7 @@ function PeminjamanStatusPage() {
             alt={peminjaman.judul || "Cover Buku"}
             width={200}
             height={300}
-            className="rounded-lg shadow-lg"
+            className="shadow-lg"
           />
         </div>
 
@@ -178,7 +183,7 @@ function PeminjamanStatusPage() {
                 ))}
               </div>
               <p className="text-xs text-gray-500 mt-4 text-center max-w-xs px-4">
-                Simpan kode ini untuk pengembalian buku
+                Simpan kode ini untuk mengambil buku
               </p>
             </div>
           )}

@@ -200,7 +200,7 @@ export default function PeminjamanPage() {
               className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition"
             >
               <div className="flex gap-4 mb-4">
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <BookCoverImage
                     cover={p.cover_picture}
                     alt={p.judul || "Book cover"}

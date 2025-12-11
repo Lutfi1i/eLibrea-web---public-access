@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { authOptions } from "../../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { getApiUrl, getImageUrl } from "@/lib/api";
+import { getApiUrl } from "@/lib/api";
 import Link from "next/link";
 import BookCard from "@/components/BookCard";
 
@@ -64,7 +64,7 @@ export default async function BookmarkPage() {
           <h2 className="text-xl font-semibold mt-4">Belum ada bookmark</h2>
           <p className="text-gray-500 mt-2 max-w-md">
             Kamu belum menandai buku apapun. Mulai tambahkan buku ke bookmark
-            untuk membacanya nanti.
+            untuk meminjamnya nanti.
           </p>
         </div>
       )}
