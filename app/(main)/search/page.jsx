@@ -1,10 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import BookCard from "@/components/BookCard";
 import { getApiUrl } from "@/lib/api";
 import { useSession } from "next-auth/react";
-import { Search } from "lucide-react";
 
 async function searchBooks(keyword) {
   if (!keyword || keyword.trim() === "") {
@@ -23,7 +22,7 @@ async function searchBooks(keyword) {
     }
 
     const data = await res.json();
-        if (Array.isArray(data)) {
+    if (Array.isArray(data)) {
       return data;
     }
     if (data.success && data.data) {
@@ -39,7 +38,8 @@ async function searchBooks(keyword) {
   }
 }
 
-export default function SearchPage() {
+// Pisahkan komponen yang menggunakan useSearchParams
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { data: session } = useSession();
@@ -186,3 +186,15 @@ export default function SearchPage() {
   );
 }
 
+// Wrap dengan Suspense di export default
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="w-full min-h-screen p-6 flex justify-center items-center">
+        <div className="text-gray-500">Memuat halaman pencarian...</div>
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
+  );
+}
