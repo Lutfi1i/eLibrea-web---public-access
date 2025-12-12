@@ -1,11 +1,63 @@
 "use client"
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import { storedUSer } from "@/lib/action"
+import { signIn } from "next-auth/react"
+import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 
 export default function Page() {
+  const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [success, setSuccess] = useState(null)
+
+  async function handleRegister(e) {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+    setSuccess(null)
+
+    const formData = new FormData(e.currentTarget)
+    const username = formData.get("username")
+    const email = formData.get("email")
+    const password = formData.get("password")
+
+    try {
+      const res = await fetch("/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, name: username }),
+      })
+      const data = await res.json()
+
+      if (!res.ok || !data?.success) {
+        setError(data?.message || "Gagal melakukan registrasi")
+        setLoading(false)
+        return
+      }
+
+      setSuccess("Registrasi berhasil, mengalihkan...")
+
+      const signInRes = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      })
+
+      if (signInRes?.error) {
+        setError("Registrasi berhasil, silakan login manual.")
+        setLoading(false)
+        router.push("/login")
+        return
+      }
+
+      router.push("/home")
+    } catch (err) {
+      setError("Terjadi kesalahan. Silakan coba lagi.")
+      setLoading(false)
+    }
+  }
 
   return (
     <motion.div
@@ -102,7 +154,17 @@ export default function Page() {
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-15 mt-5">Buat Akun</h2>
 
-          <form action={storedUSer} className="space-y-8">
+          {error && (
+            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg text-sm">
+              {error}
+            </div>
+          )}
+          {success && (
+            <div className="mb-4 p-3 bg-green-100 border border-green-400 text-green-700 rounded-lg text-sm">
+              {success}
+            </div>
+          )}
+          <form onSubmit={handleRegister} className="space-y-8">
             {/* Username */}
             <div>
               <label className="block text-sm font-medium text-gray-900 mb-2">Username</label>
@@ -160,9 +222,10 @@ export default function Page() {
               whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 300 }}
               type="submit"
-              className="w-full bg-[#B1344D] text-white font-bold py-3 px-4 rounded-lg hover:shadow-lg transition-shadow"
+              disabled={loading}
+              className="w-full bg-[#B1344D] text-white font-bold py-3 px-4 rounded-lg hover:shadow-lg transition-shadow disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Daftar
+              {loading ? "Memproses..." : "Daftar"}
             </motion.button>
           </form>
         </motion.div>

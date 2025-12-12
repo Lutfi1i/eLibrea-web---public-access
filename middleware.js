@@ -9,7 +9,7 @@ export default withAuth(
     // Redirect authenticated users dari halaman publik ke /home
     if (
       token && 
-      (pathname === "/" || pathname.startsWith("/login") || pathname.startsWith("/register"))
+      (pathname === "/" || pathname.startsWith("/login") || pathname.startsWith("/signup"))
     ) {
       return NextResponse.redirect(new URL("/home", req.url));
     }
@@ -41,7 +41,7 @@ export const config = {
     "/admin/:path*",
     "/books-create/:path*",
     "/login",
-    "/register",
+    "/signup",
     "/",
   ],
 };

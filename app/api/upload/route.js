@@ -1,3 +1,8 @@
+// Pastikan route handler ini berjalan di runtime Node (bukan edge)
+export const runtime = "nodejs";
+// Paksa route dinamis agar tidak diprerender saat build
+export const dynamic = "force-dynamic";
+
 import { writeFile } from 'fs/promises';
 import path from 'path';
 import connection from '@/lib/database';
