@@ -49,7 +49,7 @@ export default function Page() {
       if (response?.ok) {
         setTimeout(() => {
           // Check session one more time before redirecting
-          fetch('/api/auth/session')
+          fetch(getApiUrl('/api/auth/me'))
             .then(res => res.json())
             .then(sessionData => {
               if (sessionData?.user?.role === 'admin') {

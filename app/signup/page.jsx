@@ -4,6 +4,7 @@ import { Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
+import { getApiUrl } from "@/lib/api"
 
 export default function Page() {
   const router = useRouter()
@@ -24,7 +25,7 @@ export default function Page() {
     const password = formData.get("password")
 
     try {
-      const res = await fetch("/api/auth/register", {
+      const res = await fetch(getApiUrl("/api/auth/register"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password, name: username }),
